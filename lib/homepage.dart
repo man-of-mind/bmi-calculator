@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'icon_content.dart';
+import 'reusable_card.dart';
+
 const bottomContainerHeight = 65.0;
-const containerColor = Color(0xFF1D1E33);
+const activeColor = Color(0xFF1D1E33);
+const inactiveColor = Color(0xFF111328);
 const bottomContainerColor = Color(0xFFEB1555);
+
+enum Gender {
+  male,
+  female,
+}
 
 class HomePage extends StatefulWidget {
   @override
@@ -11,6 +20,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  Gender selectedGender;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,34 +34,62 @@ class _HomePageState extends State<HomePage> {
           Expanded(
             child: Row(
               children: [
-                ReusableCard(
-                  colour: containerColor,
-                  cardChild: ReusableChild(
-                    gender: 'FEMALE',
-                    genderIcon: FontAwesomeIcons.mars,
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        selectedGender = Gender.male;
+                      });
+                    },
+                    child: ReusableCard(
+                      colour: selectedGender == Gender.male
+                          ? activeColor
+                          : inactiveColor,
+                      cardChild: ReusableChild(
+                        gender: 'MALE',
+                        genderIcon: FontAwesomeIcons.mars,
+                      ),
+                    ),
                   ),
                 ),
-                ReusableCard(
-                  colour: containerColor,
-                  cardChild: ReusableChild(
-                    genderIcon: FontAwesomeIcons.venus,
-                    gender: 'FEMALE',
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        selectedGender = Gender.female;
+                      });
+                    },
+                    child: ReusableCard(
+                      colour: selectedGender == Gender.female
+                          ? activeColor
+                          : inactiveColor,
+                      cardChild: ReusableChild(
+                        genderIcon: FontAwesomeIcons.venus,
+                        gender: 'FEMALE',
+                      ),
+                    ),
                   ),
                 ),
               ],
             ),
           ),
-          ReusableCard(
-            colour: containerColor,
+          Expanded(
+            child: ReusableCard(
+              colour: activeColor,
+            ),
           ),
           Expanded(
             child: Row(
               children: [
-                ReusableCard(
-                  colour: containerColor,
+                Expanded(
+                  child: ReusableCard(
+                    colour: activeColor,
+                  ),
                 ),
-                ReusableCard(
-                  colour: containerColor,
+                Expanded(
+                  child: ReusableCard(
+                    colour: activeColor,
+                  ),
                 ),
               ],
             ),
@@ -63,54 +102,6 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-    );
-  }
-}
-
-class ReusableCard extends StatelessWidget {
-  final Color colour;
-  final Widget cardChild;
-  ReusableCard({@required this.colour, this.cardChild});
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
-        child: cardChild,
-        margin: EdgeInsets.all(15.0),
-        decoration: BoxDecoration(
-          color: colour,
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-      ),
-    );
-  }
-}
-
-class ReusableChild extends StatelessWidget {
-  final IconData genderIcon;
-  final String gender;
-
-  ReusableChild({this.genderIcon, this.gender});
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Icon(
-          genderIcon,
-          size: 50.0,
-        ),
-        SizedBox(
-          height: 15.0,
-        ),
-        Text(
-          gender,
-          style: TextStyle(
-            fontSize: 18.0,
-            color: Color(0xFF8D8E98),
-          ),
-        )
-      ],
     );
   }
 }
