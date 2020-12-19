@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 
-const genderStyle = TextStyle(
-  fontSize: 18.0,
-  color: Color(0xFF8D8E98),
-);
+import 'constants.dart';
 
 class ReusableChild extends StatelessWidget {
   final IconData genderIcon;
@@ -24,7 +21,7 @@ class ReusableChild extends StatelessWidget {
         ),
         Text(
           gender,
-          style: genderStyle,
+          style: KLabelStyle,
         )
       ],
     );
