@@ -211,24 +211,38 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
-          GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ResultsPage(),
-                ),
-              );
-            },
-            child: Container(
-              child: Text('CALCULATE'),
-              margin: EdgeInsets.only(top: 10.0),
-              color: KBottomContainerColor,
-              width: double.infinity,
-              height: KBottomContainerHeight,
-            ),
-          ),
+          BottomButton(
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ResultsPage()));
+              },
+              buttonTitle: 'CALCULATE')
         ],
+      ),
+    );
+  }
+}
+
+class BottomButton extends StatelessWidget {
+  final Function onTap;
+  final String buttonTitle;
+  BottomButton({@required this.onTap, @required this.buttonTitle});
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        child: Center(
+          child: Text(
+            buttonTitle,
+            style: KLargeButtonTextStyle,
+          ),
+        ),
+        margin: EdgeInsets.only(top: 10.0),
+        padding: EdgeInsets.only(bottom: 20.0),
+        color: KBottomContainerColor,
+        width: double.infinity,
+        height: KBottomContainerHeight,
       ),
     );
   }
@@ -243,9 +257,9 @@ class RoundIconButton extends StatelessWidget {
     return RawMaterialButton(
       child: Icon(icon),
       onPressed: onTap,
-      constraints: BoxConstraints(
-        minHeight: 48.0,
-        maxHeight: 48.0,
+      constraints: BoxConstraints.tightFor(
+        width: 56.0,
+        height: 56.0,
       ),
       shape: CircleBorder(),
       fillColor: Color(0xFF4C4F5E),
